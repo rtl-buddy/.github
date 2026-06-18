@@ -15,8 +15,8 @@ machine-readable output for CI and coding agents, and rich formatted output for 
 
 ## Start here
 
-- 📦 **[`rtl_buddy`](https://github.com/rtl-buddy/rtl_buddy)** — the flagship CLI ([PyPI](https://pypi.org/project/rtl_buddy/) · [docs](https://rtl-buddy.github.io/rtl_buddy/))
-- 🚀 **[rtl-buddy-project-template](https://github.com/rtl-buddy/rtl-buddy-project-template)** — a ready-to-run RTL project with example designs, tests, and full integration; the fastest way to try it
+- **[`rtl_buddy`](https://github.com/rtl-buddy/rtl_buddy)** — the flagship CLI ([PyPI](https://pypi.org/project/rtl_buddy/) · [docs](https://rtl-buddy.github.io/rtl_buddy/))
+- **[rtl-buddy-project-template](https://github.com/rtl-buddy/rtl-buddy-project-template)** — a ready-to-run RTL project with example designs, tests, and full integration; the fastest way to try it
 
 ```bash
 uv add rtl_buddy
