@@ -88,6 +88,28 @@ uv run rb cdc -c cdc/sandbox/cdc.yaml
   </tr>
 </table>
 
+## Design philosophy
+
+RTL Buddy is an **experiment in agent-built EDA tooling** — built by agents, for agents,
+with humans in the loop. The code, tests, and tooling across these repos are written
+largely by AI coding agents under human supervision, and the tools are designed first to
+be driven *by* agents: structured YAML config, machine-readable JSONL output, and
+explicit tool-readiness checks so an agent can plan, run, and interpret a full RTL flow
+on its own.
+
+We're betting on speed. Letting agents do the building lets us move at a pace a
+hand-written toolchain of this scope simply can't — spanning simulation, synthesis, PnR,
+power, CDC, formal, mutation, profiling, and more, and growing fast.
+
+We're equally blunt about the catch: **agent-written code moves fast and breaks things.**
+Gaps, rough edges, and the occasional wrong turn come with the territory. Our bet is that
+we can *close* them just as fast as we make them — with agents, backed by human review,
+regression suites, and the project template as a constant end-to-end check.
+
+So treat this as **living, breaking, fast-moving software.** Pin your versions, expect
+things to change under you, and [open issues](https://github.com/rtl-buddy) when something
+cracks — that loop, agents fixing what agents built, *is* the project.
+
 ## The ecosystem
 
 ### Core tools
