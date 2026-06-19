@@ -1,16 +1,21 @@
+<div align="center">
+
+<img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/rb-mascot.png" alt="RTL Buddy mascot" width="200" />
+
 # RTL Buddy
 
-**Open-source tooling for SystemVerilog/Verilog design and verification — built to work well for both humans and AI agents.**
+**Open-source tooling for SystemVerilog/Verilog design and verification —<br/>built to work well for both humans and AI agents.**
+
+[![PyPI](https://img.shields.io/pypi/v/rtl_buddy)](https://pypi.org/project/rtl_buddy/)
+[![Docs](https://img.shields.io/badge/docs-rtl--buddy.github.io-blue)](https://rtl-buddy.github.io/rtl_buddy/)
+[![License](https://img.shields.io/badge/license-BSD--3--Clause-blue)](https://github.com/rtl-buddy/rtl_buddy/blob/main/LICENSE)
+
+</div>
 
 RTL Buddy is an ecosystem of tools centered on [`rtl_buddy`](https://github.com/rtl-buddy/rtl_buddy),
-a Python CLI that gives RTL projects a single, repeatable control plane for everyday
-design and verification work: simulator-driven tests and randomized regressions, filelist
-generation, synthesis, place-and-route, power analysis, CDC lint, formal property
-verification, mutation testing, waveform viewing, hierarchy rendering, AXI interconnect
-profiling, and spec traceability.
-
-It sits on top of the open-source tools your project already uses — Verilator, Yosys,
-OpenROAD, SymbiYosys, Surfer, Verible — giving you a cleaner interface, structured
+a Python CLI that gives RTL projects a single, repeatable control plane for everyday design and
+verification work. It sits on top of the open-source tools your project already uses — Verilator,
+Yosys, OpenROAD, SymbiYosys, Surfer, Verible — giving you a cleaner interface, structured
 machine-readable output for CI and coding agents, and rich formatted output for people.
 
 ## Start here
@@ -24,6 +29,64 @@ uv run rb test basic        # run a single test
 uv run rb regression        # run the full regression
 uv run rb cdc -c cdc/sandbox/cdc.yaml
 ```
+
+## What it does
+
+<table>
+  <tr>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/sim-regression.png" width="120" /><br/>
+      <b>Simulation &amp; Regression</b><br/><sub><code>rb test</code> · <code>rb regression</code></sub>
+    </td>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/wave-debug.png" width="120" /><br/>
+      <b>Waveform Debug</b><br/><sub><code>rb wave</code> · <code>rb hub</code></sub>
+    </td>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/synth-pnr-power.png" width="120" /><br/>
+      <b>Synth · PnR · Power</b><br/><sub><code>rb synth</code> · <code>rb pnr</code> · <code>rb power</code></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/cdc.png" width="120" /><br/>
+      <b>CDC Lint</b><br/><sub><code>rb cdc</code></sub>
+    </td>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/formal.png" width="120" /><br/>
+      <b>Formal Verification</b><br/><sub><code>rb fpv</code></sub>
+    </td>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/mutation-testing.png" width="120" /><br/>
+      <b>Mutation Testing</b><br/><sub><code>rb mut</code></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/axi-profiling.png" width="120" /><br/>
+      <b>AXI Profiling</b><br/><sub><code>rb axi-profile</code></sub>
+    </td>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/spec-traceability.png" width="120" /><br/>
+      <b>Spec Traceability</b><br/><sub><code>rb spec</code></sub>
+    </td>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/fpga-implementation.png" width="120" /><br/>
+      <b>FPGA Implementation</b><br/><sub><code>rb fpga</code></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/xplr.png" width="120" /><br/>
+      <b>Design-Space Exploration</b><br/><sub><code>rb xplr</code></sub>
+    </td>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/ci-agent-mode.png" width="120" /><br/>
+      <b>CI &amp; Agent Mode</b><br/><sub>JSONL logs · <code>rb tool-check</code></sub>
+    </td>
+    <td align="center" width="200"></td>
+  </tr>
+</table>
 
 ## The ecosystem
 
@@ -46,9 +109,9 @@ uv run rb cdc -c cdc/sandbox/cdc.yaml
 
 ### Vendored upstream tools
 
-RTL Buddy maintains lightly-patched forks of several open-source EDA tools so its flows
-stay reproducible across platforms. Upstream is always the canonical source — these exist
-only to pin known-good builds and carry integration fixes.
+RTL Buddy maintains lightly-patched forks of several open-source EDA tools so its flows stay
+reproducible across platforms. Upstream is always the canonical source — these exist only to pin
+known-good builds and carry integration fixes.
 
 [`yosys`](https://github.com/rtl-buddy/yosys) ·
 [`yosys-slang`](https://github.com/rtl-buddy/yosys-slang) ·
