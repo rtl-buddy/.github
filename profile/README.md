@@ -84,7 +84,10 @@ uv run rb cdc -c cdc/sandbox/cdc.yaml
       <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/ci-agent-mode.png" width="120" /><br/>
       <b>CI &amp; Agent Mode</b><br/><sub>JSONL logs · <code>rb tool-check</code></sub>
     </td>
-    <td align="center" width="200"></td>
+    <td align="center" width="200">
+      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/graph.png" width="120" /><br/>
+      <b>Design Knowledge Graph</b><br/><sub><code>rb graph</code> · queryable RTL context</sub>
+    </td>
   </tr>
 </table>
 
