@@ -20,6 +20,7 @@ machine-readable output for CI and coding agents, and rich formatted output for 
 
 ## Start here
 
+- **[Take the tour](https://rtl-buddy.github.io/rtl_buddy/latest/tour/)** — real output of every workflow below, captured from one run on the project template: a test, a regression, coverage, a waveform, a block diagram, CDC lint, formal proofs, a mutation score, synthesis, place-and-route, power, and agent queries
 - **[`rtl_buddy`](https://github.com/rtl-buddy/rtl_buddy)** — the flagship CLI ([PyPI](https://pypi.org/project/rtl_buddy/) · [docs](https://rtl-buddy.github.io/rtl_buddy/))
 - **[rtl-buddy-project-template](https://github.com/rtl-buddy/rtl-buddy-project-template)** — a ready-to-run RTL project with example designs, tests, and full integration; the fastest way to try it
 
