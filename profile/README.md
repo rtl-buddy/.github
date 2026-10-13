@@ -47,7 +47,7 @@ uv run rb regression -c regression.yaml  # the whole demo regression
                        Builder: verilator
 ```
 
-Only Verilator is needed for that. Each further workflow needs one more tool, and `rb tool-check` names it. Pinned, validated builds of all of them are in [rtl-buddy-tools](https://github.com/rtl-buddy/rtl-buddy-tools). To add RTL Buddy to an existing project: `uv add rtl_buddy`, then follow the [Quick Start](https://rtl-buddy.github.io/rtl_buddy/latest/quickstart/).
+Needs [uv](https://docs.astral.sh/uv/getting-started/installation/) and Verilator, nothing else. Each further workflow needs one more tool, and `rb tool-check` names it. Pinned, validated builds of all of them are in [rtl-buddy-tools](https://github.com/rtl-buddy/rtl-buddy-tools). To add RTL Buddy to an existing project: `uv add rtl_buddy`, then follow the [Quick Start](https://rtl-buddy.github.io/rtl_buddy/latest/quickstart/).
 
 ## What you get
 
