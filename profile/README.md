@@ -29,21 +29,22 @@
 
 It sits on top of the open-source tools your project already uses: Verilator, Yosys, OpenROAD, SymbiYosys, Surfer, Verible, KLayout, cocotb.
 
-## Try it in three commands
+## Try it in four commands
 
 ```bash
-git clone https://github.com/rtl-buddy/rtl-buddy-project-template.git && cd rtl-buddy-project-template
-uv run rb tool-check                      # tells you which EDA tools are found and which are missing
-uv run rb regression -c regression.yaml   # the whole demo regression, one table
+git clone https://github.com/rtl-buddy/rtl-buddy-project-template.git
+cd rtl-buddy-project-template
+uv run rb tool-check                     # which EDA tools are found
+uv run rb regression -c regression.yaml  # the whole demo regression
 ```
 
 ```text
-┃ Suite                                 ┃ Test         ┃ Result ┃ Description ┃
-│ verif/ip_async_fifo/tests.yaml        │ smoke        │ PASS   │ (nwrn=  0)  │
-│ verif/demo_tiny_alu/tests.yaml        │ basic        │ PASS   │ (nwrn=  0)  │
-│ verif/demo_tiny_alu/tests.yaml        │ random       │ PASS   │ (nwrn=  0)  │
-│ verif/demo_tiny_alu_sc/tests.yaml     │ basic_sc     │ PASS   │ ED (0 errors) │
-                                 Builder: verilator
+┃ Suite                          ┃ Test     ┃ Result ┃ Description ┃
+│ verif/ip_async_fifo/tests.yaml │ smoke    │ PASS   │ (nwrn=  0)  │
+│ verif/demo_tiny_alu/tests.yaml │ basic    │ PASS   │ (nwrn=  0)  │
+│ verif/demo_tiny_alu/tests.yaml │ random   │ PASS   │ (nwrn=  0)  │
+│ verif/demo_tiny_alu_sc/tests.yaml │ basic_sc │ PASS │ ED (0 errors) │
+                       Builder: verilator
 ```
 
 Only Verilator is needed for that. Each further workflow needs one more tool, and `rb tool-check` names it. Pinned, validated builds of all of them are in [rtl-buddy-tools](https://github.com/rtl-buddy/rtl-buddy-tools). To add RTL Buddy to an existing project: `uv add rtl_buddy`, then follow the [Quick Start](https://rtl-buddy.github.io/rtl_buddy/latest/quickstart/).
