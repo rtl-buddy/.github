@@ -1,142 +1,154 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/rb-mascot.png" alt="RTL Buddy mascot" width="200" />
+<img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/rb-mascot.png" alt="RTL Buddy mascot" width="160" />
 
 # RTL Buddy
 
-**Open-source tooling for SystemVerilog/Verilog design and verification —<br/>built to work well for both humans and AI agents.**
+**One CLI that runs your SystemVerilog tests, lint, formal, synthesis, place-and-route and power on open-source tools,<br/>and reports every result as a table for you and as JSON for your CI and coding agents.**
 
-[![PyPI](https://img.shields.io/pypi/v/rtl_buddy)](https://pypi.org/project/rtl_buddy/)
-[![Docs](https://img.shields.io/badge/docs-rtl--buddy.github.io-blue)](https://rtl-buddy.github.io/rtl_buddy/)
+[![PyPI](https://img.shields.io/pypi/v/rtl_buddy?label=rtl_buddy)](https://pypi.org/project/rtl_buddy/)
+[![Python](https://img.shields.io/pypi/pyversions/rtl_buddy)](https://pypi.org/project/rtl_buddy/)
+[![Tests](https://img.shields.io/github/actions/workflow/status/rtl-buddy/rtl_buddy/test.yml?branch=main&label=tests)](https://github.com/rtl-buddy/rtl_buddy/actions/workflows/test.yml)
+[![Last release](https://img.shields.io/github/release-date/rtl-buddy/rtl_buddy?label=last%20release)](https://github.com/rtl-buddy/rtl_buddy/releases)
+[![Docs](https://img.shields.io/badge/docs-rtl--buddy.github.io-blue)](https://rtl-buddy.github.io/rtl_buddy/latest/)
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue)](https://github.com/rtl-buddy/rtl_buddy/blob/main/LICENSE)
+
+<a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#browse-it-live-in-the-hub"><img src="https://raw.githubusercontent.com/rtl-buddy/rtl_buddy/main/static/img/tour/hub-sch.png" alt="The RTL Buddy hub: live schematic of the template's ALU subsystem with the coverage overlay on, instance tree on the left" width="900" /></a>
+
+*The hub's schematic pane of the template's ALU subsystem, coverage overlay on. Every picture and table on this page is real output from the [project template](https://github.com/rtl-buddy/rtl-buddy-project-template).*
+
+**[Take the tour →](https://rtl-buddy.github.io/rtl_buddy/latest/tour/)** command by command, from one test to a routed chip.
 
 </div>
 
-RTL Buddy is an ecosystem of tools centered on [`rtl_buddy`](https://github.com/rtl-buddy/rtl_buddy),
-a Python CLI that gives RTL projects a single, repeatable control plane for everyday design and
-verification work. It sits on top of the open-source tools your project already uses — Verilator,
-Yosys, OpenROAD, SymbiYosys, Surfer, Verible — giving you a cleaner interface, structured
-machine-readable output for CI and coding agents, and rich formatted output for people.
+## Who it is for
 
-## Start here
+- **RTL engineers** who want `rb test`, `rb cdc`, `rb fpv`, `rb synth` and `rb pnr` to feel like one tool, not six, with the artefacts of each step feeding the next.
+- **CI pipelines** that need a stable exit code, a machine-readable verdict and structured logs from every flow, without parsing tool output.
+- **Coding agents** that need to plan, run and interpret a full RTL flow on their own: YAML configs, JSONL output, `rb tool-check`, a [bundled skill](https://rtl-buddy.github.io/rtl_buddy/latest/agents/) and a queryable [design graph](https://rtl-buddy.github.io/rtl_buddy/latest/concepts/graph/).
 
-- **[Take the tour](https://rtl-buddy.github.io/rtl_buddy/dev/tour/)** — real output of every workflow below, captured from one run on the project template: a test, a regression, coverage, a waveform, a block diagram, CDC lint, formal proofs, a mutation score, synthesis, place-and-route, power, and agent queries
-- **[`rtl_buddy`](https://github.com/rtl-buddy/rtl_buddy)** — the flagship CLI ([PyPI](https://pypi.org/project/rtl_buddy/) · [docs](https://rtl-buddy.github.io/rtl_buddy/))
-- **[rtl-buddy-project-template](https://github.com/rtl-buddy/rtl-buddy-project-template)** — a ready-to-run RTL project with example designs, tests, and full integration; the fastest way to try it
+It sits on top of the open-source tools your project already uses: Verilator, Yosys, OpenROAD, SymbiYosys, Surfer, Verible, KLayout, cocotb.
+
+## Try it in three commands
 
 ```bash
-uv add rtl_buddy
-uv run rb test basic        # run a single test
-uv run rb regression        # run the full regression
-uv run rb cdc -c cdc/sandbox/cdc.yaml
+git clone https://github.com/rtl-buddy/rtl-buddy-project-template.git && cd rtl-buddy-project-template
+uv run rb tool-check                      # tells you which EDA tools are found and which are missing
+uv run rb regression -c regression.yaml   # the whole demo regression, one table
 ```
 
-## What it does
+```text
+┃ Suite                                 ┃ Test         ┃ Result ┃ Description ┃
+│ verif/ip_async_fifo/tests.yaml        │ smoke        │ PASS   │ (nwrn=  0)  │
+│ verif/demo_tiny_alu/tests.yaml        │ basic        │ PASS   │ (nwrn=  0)  │
+│ verif/demo_tiny_alu/tests.yaml        │ random       │ PASS   │ (nwrn=  0)  │
+│ verif/demo_tiny_alu_sc/tests.yaml     │ basic_sc     │ PASS   │ ED (0 errors) │
+                                 Builder: verilator
+```
+
+Only Verilator is needed for that. Each further workflow needs one more tool, and `rb tool-check` names it. Pinned, validated builds of all of them are in [rtl-buddy-tools](https://github.com/rtl-buddy/rtl-buddy-tools). To add RTL Buddy to an existing project: `uv add rtl_buddy`, then follow the [Quick Start](https://rtl-buddy.github.io/rtl_buddy/latest/quickstart/).
+
+## What you get
+
+Each tile links to that step of the tour, with the real command and its real output.
 
 <table>
   <tr>
     <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/sim-regression.png" width="120" /><br/>
-      <b>Simulation &amp; Regression</b><br/><sub><code>rb test</code> · <code>rb regression</code></sub>
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#run-a-regression"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/sim-regression.png" width="110" /></a><br/>
+      <b>Simulation &amp; regression</b><br/><sub><code>rb test</code> · <code>rb regression</code></sub><br/>
+      <sub>SV, SystemC and cocotb suites in one table; Slurm or local-parallel dispatch</sub>
     </td>
     <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/wave-debug.png" width="120" /><br/>
-      <b>Waveform Debug</b><br/><sub><code>rb wave</code> · <code>rb hub</code></sub>
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#measure-coverage"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/ci-agent-mode.png" width="110" /></a><br/>
+      <b>Coverage</b><br/><sub><code>rb cov</code></sub><br/>
+      <sub>line, branch, toggle, expression and cover points per test, file and module</sub>
     </td>
     <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/synth-pnr-power.png" width="120" /><br/>
-      <b>Synth · PnR · Power</b><br/><sub><code>rb synth</code> · <code>rb pnr</code> · <code>rb power</code></sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/cdc.png" width="120" /><br/>
-      <b>CDC Lint</b><br/><sub><code>rb cdc</code></sub>
-    </td>
-    <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/formal.png" width="120" /><br/>
-      <b>Formal Verification</b><br/><sub><code>rb fpv</code></sub>
-    </td>
-    <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/mutation-testing.png" width="120" /><br/>
-      <b>Mutation Testing</b><br/><sub><code>rb mut</code></sub>
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#look-at-the-waveform"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/wave-debug.png" width="110" /></a><br/>
+      <b>Waveforms &amp; hub</b><br/><sub><code>rb wave</code> · <code>rb hub</code></sub><br/>
+      <sub>Surfer, four browser panes and Neovim, all selecting the same signal</sub>
     </td>
   </tr>
   <tr>
     <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/axi-profiling.png" width="120" /><br/>
-      <b>AXI Profiling</b><br/><sub><code>rb axi-profile</code></sub>
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#lint-clock-domain-crossings"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/cdc.png" width="110" /></a><br/>
+      <b>CDC lint</b><br/><sub><code>rb cdc</code></sub><br/>
+      <sub>every crossing traced to its flops, with auditable waivers</sub>
     </td>
     <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/spec-traceability.png" width="120" /><br/>
-      <b>Spec Traceability</b><br/><sub><code>rb spec</code></sub>
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#prove-properties"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/formal.png" width="110" /></a><br/>
+      <b>Formal verification</b><br/><sub><code>rb fpv</code></sub><br/>
+      <sub>SymbiYosys plus vacuity, cone-of-influence and dead-assume checks</sub>
     </td>
     <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/fpga-implementation.png" width="120" /><br/>
-      <b>FPGA Implementation</b><br/><sub><code>rb fpga</code></sub>
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#score-the-testbench-with-mutants"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/mutation-testing.png" width="110" /></a><br/>
+      <b>Mutation testing</b><br/><sub><code>rb mut</code></sub><br/>
+      <sub>a score for your properties, and which survivors they should have caught</sub>
     </td>
   </tr>
   <tr>
     <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/xplr.png" width="120" /><br/>
-      <b>Design-Space Exploration</b><br/><sub><code>rb xplr</code></sub>
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#synthesize"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/synth-pnr-power.png" width="110" /></a><br/>
+      <b>Synth · P&amp;R · power</b><br/><sub><code>rb synth</code> · <code>rb pnr</code> · <code>rb power</code></sub><br/>
+      <sub>Yosys to OpenROAD to GDS, with timing, DRC and power from real activity</sub>
     </td>
     <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/ci-agent-mode.png" width="120" /><br/>
-      <b>CI &amp; Agent Mode</b><br/><sub>JSONL logs · <code>rb tool-check</code></sub>
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#profile-an-interconnect"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/axi-profiling.png" width="110" /></a><br/>
+      <b>AXI profiling</b><br/><sub><code>rb axi-profile</code></sub><br/>
+      <sub>per-channel utilization, back-pressure and latency percentiles from a trace</sub>
     </td>
     <td align="center" width="200">
-      <img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/graph.png" width="120" /><br/>
-      <b>Design Knowledge Graph</b><br/><sub><code>rb graph</code> · queryable RTL context</sub>
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#ask-the-design-questions"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/graph.png" width="110" /></a><br/>
+      <b>Design knowledge graph</b><br/><sub><code>rb graph</code></sub><br/>
+      <sub>hierarchy, ports and crossings as a graph an agent can query</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="200">
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/concepts/fpga/"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/fpga-implementation.png" width="110" /></a><br/>
+      <b>FPGA implementation</b><br/><sub><code>rb fpga</code></sub><br/>
+      <sub>Vivado or openXC7, with post-route utilization and timing as structured metrics</sub>
+    </td>
+    <td align="center" width="200">
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/concepts/spec-traceability/"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/spec-traceability.png" width="110" /></a><br/>
+      <b>Spec traceability</b><br/><sub><code>rb spec</code></sub><br/>
+      <sub>spec items linked to models, tests and proofs, with the gaps listed</sub>
+    </td>
+    <td align="center" width="200">
+      <a href="https://rtl-buddy.github.io/rtl_buddy/latest/concepts/xplr/"><img src="https://raw.githubusercontent.com/rtl-buddy/.github/main/profile/assets/xplr.png" width="110" /></a><br/>
+      <b>Design-space exploration</b><br/><sub><code>rb xplr</code></sub><br/>
+      <sub>a ledger of knob changes, rationale and outcomes an agent can continue from</sub>
     </td>
   </tr>
 </table>
 
-## Design philosophy
+<div align="center">
+<a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#place-and-route"><img src="https://raw.githubusercontent.com/rtl-buddy/rtl_buddy/main/static/img/tour/subsys-nangate45-routed.png" alt="KLayout render of the routed ALU subsystem on Nangate45" width="270" /></a>
+&nbsp;
+<a href="https://rtl-buddy.github.io/rtl_buddy/latest/tour/#annotate-your-editor"><img src="https://raw.githubusercontent.com/rtl-buddy/rtl_buddy/main/static/img/tour/nvim-wave-annotation.png" alt="Neovim showing the selected waveform signal's value rendered inline next to its declaration" width="600" /></a>
 
-RTL Buddy is an **experiment in agent-built EDA tooling** — built by agents, for agents,
-with humans in the loop. The code, tests, and tooling across these repos are written
-largely by AI coding agents under human supervision, and the tools are designed first to
-be driven *by* agents: structured YAML config, machine-readable JSONL output, and
-explicit tool-readiness checks so an agent can plan, run, and interpret a full RTL flow
-on its own.
-
-We're betting on speed. Letting agents do the building lets us move at a pace a
-hand-written toolchain of this scope simply can't — spanning simulation, synthesis, PnR,
-power, CDC, formal, mutation, profiling, and more, and growing fast.
-
-We're equally blunt about the catch: **agent-written code moves fast and breaks things.**
-Gaps, rough edges, and the occasional wrong turn come with the territory. Our bet is that
-we can *close* them just as fast as we make them — with agents, backed by human review,
-regression suites, and the project template as a constant end-to-end check.
-
-So treat this as **living, breaking, fast-moving software.** Pin your versions, expect
-things to change under you, and [open issues](https://github.com/rtl-buddy) when something
-cracks — that loop, agents fixing what agents built, *is* the project.
+*Left: the template subsystem routed on Nangate45 by `rb pnr-export`. Right: the waveform cursor's value for `y` rendered inline in Neovim.*
+</div>
 
 ## The ecosystem
 
-### Core tools
-
 | Repo | What it does |
 |------|--------------|
-| [`rtl_buddy`](https://github.com/rtl-buddy/rtl_buddy) | The CLI — tests, regressions, synthesis, PnR, power, coverage, and the coordination hub that ties the rest together |
+| [`rtl_buddy`](https://github.com/rtl-buddy/rtl_buddy) | The CLI: tests, regressions, coverage, synthesis, P&R, power, and the hub that ties the rest together ([PyPI](https://pypi.org/project/rtl_buddy/) · [docs](https://rtl-buddy.github.io/rtl_buddy/latest/)) |
+| [`rtl-buddy-project-template`](https://github.com/rtl-buddy/rtl-buddy-project-template) | A ready-to-run RTL project with every workflow wired up. Clone it to try things, or start your project from it |
 | [`rtl-buddy-cdc`](https://github.com/rtl-buddy/rtl-buddy-cdc) | Clock-domain-crossing lint engine (`rb cdc`) |
-| [`rtl-buddy-view`](https://github.com/rtl-buddy/rtl-buddy-view) | RTL hierarchy and connectivity visualization (`rb hier`) |
+| [`rtl-buddy-view`](https://github.com/rtl-buddy/rtl-buddy-view) | Hierarchy, schematic and connectivity views (`rb hier`, the hub's schematic pane) |
 | [`rtl-buddy-axi-profiler`](https://github.com/rtl-buddy/rtl-buddy-axi-profiler) | AXI/APB/AHB interconnect performance profiler (`rb axi-profile`) |
-| [`rtl-buddy-xeno`](https://github.com/rtl-buddy/rtl-buddy-xeno) | SystemVerilog AST mutator powering mutation testing (`rb mut`) and CDC/FPV fuzz corpora |
+| [`rtl-buddy-xeno`](https://github.com/rtl-buddy/rtl-buddy-xeno) | SystemVerilog AST mutator behind mutation testing (`rb mut`) and CDC/FPV fuzz corpora |
+| [`rtl-buddy-nvim`](https://github.com/rtl-buddy/rtl-buddy-nvim) | Neovim plugin: waveform values and physical metrics annotated in the editor, selection synced with the hub |
 | [`rtl-buddy-tools`](https://github.com/rtl-buddy/rtl-buddy-tools) | Pinned, validated macOS/Linux builds of every EDA tool `rtl_buddy` depends on |
 
-### Editor integration
+<details>
+<summary><b>Vendored upstream tools</b></summary>
 
-| Repo | What it does |
-|------|--------------|
-| [`rtl-buddy-nvim`](https://github.com/rtl-buddy/rtl-buddy-nvim) | Neovim plugin for the RTL Buddy coordination hub |
-
-### Vendored upstream tools
-
-RTL Buddy maintains lightly-patched forks of several open-source EDA tools so its flows stay
-reproducible across platforms. Upstream is always the canonical source — these exist only to pin
+RTL Buddy maintains lightly patched forks of several open-source EDA tools so its flows stay
+reproducible across platforms. Upstream is always the canonical source; these exist only to pin
 known-good builds and carry integration fixes.
 
 [`yosys`](https://github.com/rtl-buddy/yosys) ·
@@ -146,11 +158,22 @@ known-good builds and carry integration fixes.
 [`PeakRDL`](https://github.com/rtl-buddy/PeakRDL) ·
 [`coverview`](https://github.com/rtl-buddy/coverview)
 
-## Documentation
+</details>
 
-Full docs live at **[rtl-buddy.github.io/rtl_buddy](https://rtl-buddy.github.io/rtl_buddy/)**.
+## How it is built
 
-## License
+RTL Buddy is an experiment in agent-built EDA tooling. The code, tests and docs across these
+repos are written largely by AI coding agents under human review, and the tools are designed to
+be driven by agents in turn: YAML in, JSONL out, explicit tool-readiness checks. That is how a
+toolchain of this scope grows this fast, and it is also why it is fast-moving software: pin your
+versions, expect rough edges, and [open an issue](https://github.com/rtl-buddy/rtl_buddy/issues)
+when something cracks. Agents fixing what agents built, backed by the regression suites and the
+project template as a constant end-to-end check, is the loop the project runs on.
+
+## Documentation and license
+
+Full docs live at **[rtl-buddy.github.io/rtl_buddy](https://rtl-buddy.github.io/rtl_buddy/latest/)**, including an
+[agent-readable index](https://rtl-buddy.github.io/rtl_buddy/latest/llms.txt) of every page.
 
 RTL Buddy's first-party tools are released under the BSD-3-Clause license.
 Forked upstream projects retain their original licenses.
