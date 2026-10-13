@@ -43,7 +43,7 @@ uv run rb regression -c regression.yaml  # the whole demo regression
 │ verif/ip_async_fifo/tests.yaml │ smoke    │ PASS   │ (nwrn=  0)  │
 │ verif/demo_tiny_alu/tests.yaml │ basic    │ PASS   │ (nwrn=  0)  │
 │ verif/demo_tiny_alu/tests.yaml │ random   │ PASS   │ (nwrn=  0)  │
-│ verif/demo_tiny_alu_sc/tests.yaml │ basic_sc │ PASS │ ED (0 errors) │
+│ verif/demo_tiny_alu/tests.yaml │ flags    │ PASS   │ (nwrn=  0)  │
                        Builder: verilator
 ```
 
